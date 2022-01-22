@@ -5,7 +5,7 @@ import projectReducer from "./reducers/contentReducer"
 
 
 const reducer = combineReducers({
-    blogs: projectReducer
+    content: projectReducer
 })
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))

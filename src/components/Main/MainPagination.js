@@ -1,9 +1,8 @@
 import * as React from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { PaginationItem } from "@mui/material";
 
-export default function BlogPagination({ count, change}) {
+export default function MainPagination({ count, change }) {
     const test = (e, v) => {
         change(v)
     }

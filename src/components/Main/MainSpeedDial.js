@@ -1,31 +1,31 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Backdrop from "@mui/material/Backdrop";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
-import { BsSave, BsShareFill, BsPrinterFill } from "react-icons/bs";
-import { FiCopy } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 
-const actions = [
-  { icon: <FiCopy />, name: "Copy", value:"test" },
-  { icon: <BsSave />, name: "Save" },
-  { icon: <BsPrinterFill />, name: "Print" },
-  { icon: <BsShareFill />, name: "Share" },
-];
+const actions = [{ icon: <FiPlus />, name: "New", value: "NEW" }];
 
-export default function BlogSpeedDial() {
+export default function MainSpeedDial(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const test = (action) => {
-    console.log(action);
-    setOpen(false);
+    switch (action.value) {
+      case "NEW":
+        props.openModal();
+        setOpen(false);
+        break
+      default:
+        setOpen(false);
+        return;
+    }
   };
 
   return (
-    <Box sx={{ height: 330, transform: "translateZ(0px)", flexGrow: 1 }}>
+    <Box sx={{ height: 330,  flexGrow: 1 }}>
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
         sx={{ position: "absolute", bottom: 16, right: 16 }}

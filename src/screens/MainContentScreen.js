@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import BlogComponent from "../components/Blogs/BlogComponent";
-import BlogPagination from "../components/Blogs/BlogPagination";
-import BlogSpeedDial from "../components/Blogs/BlogSpeedDial";
+import MainCardComponent from "../components/Main/MainCardComponent";
+import MainNewPostModal from "../components/Main/MainNewPostModal";
+import MainPagination from "../components/Main/MainPagination";
+import MainSpeedDial from "../components/Main/MainSpeedDial";
 
 let styles = {
   container: {
@@ -29,34 +30,38 @@ let styles = {
 const MainContentScreen = () => {
   const [sliceStart, setSliceStart] = useState(0);
   const [sliceEnd, setSliceEnd] = useState(9);
-  const blogs = useSelector((state) => state.blogs);
+  const [modalVisibility, setModalVisibility] = useState(false);
+  const content = useSelector((state) => state.content);
 
   const pageNavFunct = (event, value) => {
     setSliceEnd(9 * value);
     setSliceStart(9 * value - 9);
   };
 
-
   return (
     <div style={styles.container}>
+      <MainNewPostModal
+        open={modalVisibility}
+        close={() => setModalVisibility(!modalVisibility)}
+      />
       <div style={styles.componentContainer}>
-        {blogs.slice(sliceStart, sliceEnd).map((element) => (
+        {content.slice(sliceStart, sliceEnd).map((element) => (
           <div style={{ padding: 10 }}>
-            <BlogComponent other={blogs} test={element} />
+            <MainCardComponent other={content} test={element} />
           </div>
         ))}
       </div>
       <div style={{ position: "fixed", bottom: 50, right: 0 }}>
-        <BlogSpeedDial />
+        <MainSpeedDial openModal={() => setModalVisibility(true)} />
       </div>
       <div style={styles.paginationContainer}>
         <div style={{ position: "fixed", bottom: 0 }}>
-          <BlogPagination
+          <MainPagination
             change={(val) => pageNavFunct(null, val)}
             count={
-              Number.isInteger(blogs.length / 9)
-                ? blogs.length / 9 - 1
-                : Math.floor(blogs.length / 9)
+              Number.isInteger(content.length / 9)
+                ? content.length / 9 - 1
+                : Math.floor(content.length / 9)
             }
           />
         </div>
