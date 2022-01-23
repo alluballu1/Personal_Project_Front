@@ -55,7 +55,6 @@ const MyProjectsScreen = (props) => {
             <MainCardComponent other={content} test={element} />
           </div>
         ))}
-              <Button onClick={() => console.log(data)}>Hallo</Button>
       </div>
       <div style={{ position: "fixed", bottom: 50, right: 0 }}>
         <MainSpeedDial openModal={() => setModalVisibility(true)} />
