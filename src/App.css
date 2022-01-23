@@ -1,6 +1,10 @@
 .App {
   text-align: center;
 }
+.container{
+  background:linear-gradient(#00000080,transparent);
+  background-color:rgb(255, 255, 255) /*this your primary color*/
+}   
 
 .App-logo {
   height: 40vmin;

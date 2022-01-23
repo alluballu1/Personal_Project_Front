@@ -2,17 +2,31 @@ import "./App.css";
 import ResponsiveAppBar from "./components/Navigation/AppBar";
 import { Container } from "@mui/material";
 import MainContentScreen from "./screens/MainContentScreen";
+import img from "./media/wallpapertip_blue-pattern-wallpaper_1172740.jpg";
+
+import { Routes, Route, Link } from "react-router-dom";
+import LoginScreen from "./screens/LoginScreen";
 
 function App() {
   return (
-    <div style={{ height: "100vh", backgroundColor: "#2D2D2D" }}>
+    <>
       <ResponsiveAppBar />
-      <div  style={{ backgroundColor: "#2D2D2D", marginTop:60}}>
-        <Container>
-          <MainContentScreen />
-        </Container>
+      <div
+        className="container"
+        style={{ height: "fit-content", backgroundImage: `url(${img})` }}
+      >
+        <div style={{ marginTop: 60 }}>
+          <Container style={{ width: "85%" }}>
+            <Routes>
+              <Route path="/" element={<MainContentScreen />} />
+            </Routes>
+            <Routes>
+              <Route path="/my" element={<LoginScreen/>} />
+            </Routes>
+          </Container>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

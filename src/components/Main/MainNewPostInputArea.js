@@ -19,8 +19,8 @@ const MainNewPostInputArea = (props) => {
       description: descriptionValue,
     };
 
-      props.postContent(newProject);
-      props.close()
+    props.postContent(newProject);
+    props.close();
   };
 
   let styles = {
@@ -50,7 +50,7 @@ const MainNewPostInputArea = (props) => {
         }}
         autoComplete="off"
         component="form"
-        //onSubmit={submitHandler}
+        onSubmit={submitHandler}
       >
         <Input
           value={nameValue}
@@ -74,7 +74,6 @@ const MainNewPostInputArea = (props) => {
           value={SSUrlValue}
           onChange={(value) => setSSurlValue(value.target.value)}
           placeholder="Project Screenshot Url"
-          required
           size="medium"
           error={urlValue === ""}
           sx={styles.inputStyle}
@@ -105,7 +104,10 @@ const MainNewPostInputArea = (props) => {
           >
             Cancel
           </Button>
-          <Button variant="contained" onClick={() => submitHandler()}>
+          <Button
+            type="submit"
+            variant="contained" /* onClick={() => submitHandler()} */
+          >
             Submit
           </Button>
         </div>

@@ -29,10 +29,16 @@ export default function MainSpeedDial(props) {
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
         sx={{ position: "absolute", bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
+        icon={<SpeedDialIcon  />}
         onClose={handleClose}
         onOpen={handleOpen}
         open={open}
+        FabProps={{
+          sx: {
+            backgroundColor: "#333333",
+            ":hover":{backgroundColor:"#292929"}
+          }
+        }}
       >
         {actions.map((action) => (
           <SpeedDialAction

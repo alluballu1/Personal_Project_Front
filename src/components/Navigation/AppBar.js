@@ -1,14 +1,30 @@
-
-import {AppBar, Box, Toolbar, IconButton, Typography, Menu,  Container, Avatar, Button, Tooltip, MenuItem} from "@mui/material"
-import React, {useState} from "react";
-import {GiBookshelf} from "react-icons/gi"
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Avatar,
+  Button,
+  Tooltip,
+  MenuItem,
+  Link,
+} from "@mui/material";
+import React, { useState } from "react";
+import { GiBookshelf, GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch } from "react-redux";
 import { addOne } from "../../reducers/contentReducer";
-const pages = ['About Me', 'My Projects', ""];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout', 'test'];
+//const pages = ['About Me', 'My Projects',];
+const pages = [
+  { name: "My Projects", link: "/my" },
+  { name: "All Projects", link: "/" },
+];
+const settings = ["Profile", "Account", "Dashboard", "Logout", "test"];
 
 const ResponsiveAppBar = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -16,7 +32,7 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    console.log(event)
+    console.log(event);
     setAnchorElUser(event.currentTarget);
   };
 
@@ -29,19 +45,22 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar style={{background: "#333333", color:"#ffffff"}} position="fixed">
-      <Container maxWidth="xl">
+    <AppBar
+      style={{ background: "#333333", color: "#ffffff" }}
+      position="fixed"
+    >
+      <Container maxWidth="20">
         <Toolbar disableGutters>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            <GiBookshelf size={50}/>
+            <GiBookshelf size={50} />
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -50,29 +69,36 @@ const ResponsiveAppBar = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <GiBookshelf size={36}/>
+              <GiHamburgerMenu size={36} />
             </IconButton>
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: "bottom",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: { xs: "block", md: "none" },
               }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">poggers</Typography>
+                  <Link
+                    variant="body1"
+                    underline="hover"
+                    color="inherit"
+                    href={page.link}
+                  >
+                    {page.name}
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -81,17 +107,17 @@ const ResponsiveAppBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+          ></Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
+                href={page.link}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.name}
               </Button>
             ))}
           </Box>
@@ -99,21 +125,21 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Pogger Haha" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Test" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}

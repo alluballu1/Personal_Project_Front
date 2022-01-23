@@ -11,17 +11,17 @@ export default function MainCardComponent(props) {
       style={{ backgroundColor: "#2D2D2D" }}
       sx={{
         ":hover": {boxShadow:10 },
-        maxWidth: 350,
-        minWidth: 320,
+        maxWidth: 250,
+        minWidth: 200,
         height: "fit-content",
-        maxHeight:300
+        maxHeight:260
       }}
     >
       <CardActionArea onClick={() =>  window.open(props.test.url)}>
         <CardMedia
           component="img"
           height="140"
-          image={props.test.screenshot}
+          image={props.test.screenshot ? props.test.screenshot : "https://wallpaperbat.com/img/641230-react-js-wallpaper-top-free-react-js-background.jpg"}
         />
         <CardContent>
           <Typography gutterBottom color="white" variant="h6" component="div">

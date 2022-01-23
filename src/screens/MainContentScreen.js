@@ -9,13 +9,14 @@ let styles = {
   container: {
     padding: 20,
     backgroundColor: "#30302E",
-    height: "100%",
+    minHeight: "100vh",
+    height:"fit-content"
   },
   componentContainer: {
     flexWrap: "wrap",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "normal",
+    justifyContent: "space-evenly",
     marginBottom: 50,
   },
   paginationContainer: {
@@ -29,13 +30,13 @@ let styles = {
 
 const MainContentScreen = () => {
   const [sliceStart, setSliceStart] = useState(0);
-  const [sliceEnd, setSliceEnd] = useState(9);
+  const [sliceEnd, setSliceEnd] = useState(12);
   const [modalVisibility, setModalVisibility] = useState(false);
   const content = useSelector((state) => state.content);
 
   const pageNavFunct = (event, value) => {
-    setSliceEnd(9 * value);
-    setSliceStart(9 * value - 9);
+    setSliceEnd(12 * value);
+    setSliceStart(12 * value - 12);
   };
 
   return (
@@ -59,9 +60,9 @@ const MainContentScreen = () => {
           <MainPagination
             change={(val) => pageNavFunct(null, val)}
             count={
-              Number.isInteger(content.length / 9)
-                ? content.length / 9 - 1
-                : Math.floor(content.length / 9)
+              Number.isInteger(content.length / 12)
+                ? content.length / 12 - 1
+                : Math.floor(content.length / 12)
             }
           />
         </div>
