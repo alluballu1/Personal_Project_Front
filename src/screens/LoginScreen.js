@@ -1,8 +1,15 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { loginHandler } from "../reducers/loginReducer";
 
 const LoginScreen = () => {
-  const navigation = useNavigate();
+    const navigation = useNavigate();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const dispatch = useDispatch()
+    
   let styles = {
     containerStyle: {
       height: "100vh",
@@ -30,10 +37,10 @@ const LoginScreen = () => {
       padding: 10,
     },
   };
-
   const submitHandler = (event) => {
     event.preventDefault();
-    navigation("/");
+    dispatch(loginHandler({username, password}))
+    navigation("/")
   };
   return (
     <Container style={styles.containerStyle}>
@@ -48,16 +55,20 @@ const LoginScreen = () => {
             color="ivory"
             style={{ textAlign: "center" }}
           >
-            LOGIN
+            Login
           </Typography>
-          <TextField
+                  <TextField
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
             margin="normal"
             variant="filled"
             label="Username"
             required
             sx={{ backgroundColor: "ivory", borderRadius: 1 }}
           />
-          <TextField
+                  <TextField
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
             variant="filled"
             label="Username"
             required

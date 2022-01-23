@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import MainCardComponent from "../components/Main/MainCardComponent";
 import MainNewPostModal from "../components/Main/MainNewPostModal";
 import MainPagination from "../components/Main/MainPagination";
-import MainSpeedDial from "../components/Main/MainSpeedDial";
 
 let styles = {
   container: {
@@ -28,11 +27,11 @@ let styles = {
   },
 };
 
-const MainContentScreen = () => {
+const MainContentScreen = (props) => {
   const [sliceStart, setSliceStart] = useState(0);
   const [sliceEnd, setSliceEnd] = useState(12);
   const [modalVisibility, setModalVisibility] = useState(false);
-  const content = useSelector((state) => state.content);
+  const content = props.content;
 
   const pageNavFunct = (event, value) => {
     setSliceEnd(12 * value);
@@ -51,9 +50,6 @@ const MainContentScreen = () => {
             <MainCardComponent other={content} test={element} />
           </div>
         ))}
-      </div>
-      <div style={{ position: "fixed", bottom: 50, right: 0 }}>
-        <MainSpeedDial openModal={() => setModalVisibility(true)} />
       </div>
       <div style={styles.paginationContainer}>
         <div style={{ position: "fixed", bottom: 0 }}>

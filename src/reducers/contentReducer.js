@@ -43,9 +43,7 @@ export const addOne = (value) => {
 const projectReducer = (state = defaultState, action) => {
   switch (action.type) {
     case "ADD_NEW":
-      const test = state.concat(action.data);
-      console.log(state);
-      return test;
+      return [...state, action.data]
     default:
       return state;
   }

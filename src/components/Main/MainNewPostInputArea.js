@@ -98,8 +98,7 @@ const MainNewPostInputArea = (props) => {
           }}
         >
           <Button
-            sx={{ background: "red", ":hover": { background: "darkred" } }}
-            variant="contained"
+            variant="outlined"
             onClick={() => props.close()}
           >
             Cancel

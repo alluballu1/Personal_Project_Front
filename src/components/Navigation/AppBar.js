@@ -12,21 +12,18 @@ import {
   MenuItem,
   Link,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GiBookshelf, GiHamburgerMenu } from "react-icons/gi";
-import { useDispatch } from "react-redux";
-import { addOne } from "../../reducers/contentReducer";
-//const pages = ['About Me', 'My Projects',];
 const pages = [
-  { name: "My Projects", link: "/my" },
+  { name: "My Projects", link: "/my_projects" },
   { name: "All Projects", link: "/" },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout", "test"];
 
-const ResponsiveAppBar = () => {
-  const dispatch = useDispatch();
+const ResponsiveAppBar = (props) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [login, setlogin] = useState(props.login);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -43,6 +40,15 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("LoggedUserData")
+    if (token) {
+      
+    setlogin(token)
+    }
+}, [login]);
+  
 
   return (
     <AppBar
@@ -121,36 +127,58 @@ const ResponsiveAppBar = () => {
               </Button>
             ))}
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Test" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => dispatch(addOne())}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          { login !== null ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Test" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={() => window.localStorage.removeItem("LoggedUserData")}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          ) : (
+            <Box>
+              <Tooltip title="Login">
+                <Link
+                  sx={{
+                    backgroundColor: "#414141",
+                    color: "white",
+                    padding: 1,
+                    borderRadius: 2,
+                    ":hover": {
+                      backgroundColor: "#292929",
+                      color: "white",
+                    },
+                  }}
+                  underline="none"
+                  href="/login"
+                >
+                  Login
+                </Link>
+              </Tooltip>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
