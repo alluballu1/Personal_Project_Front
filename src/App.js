@@ -43,9 +43,9 @@ function App() {
       >
         <div style={{ marginTop: 60 }}>
           <Container style={{ width: "85%" }}>
-            <Routes>
-              {routes.map((element) => {
-                return (
+            {routes.map((element) => {
+              return (
+                <Routes>
                   <Route
                     path={element.path}
                     element={
@@ -54,9 +54,9 @@ function App() {
                       </div>
                     }
                   />
-                );
-              })}
-            </Routes>
+                </Routes>
+              );
+            })}
           </Container>
         </div>
       </div>
