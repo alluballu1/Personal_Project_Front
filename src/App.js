@@ -8,7 +8,7 @@ import LoginScreen from "./screens/LoginScreen";
 import MyProjectsScreen from "./screens/MyProjectsScreen";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-
+import functions from "./services/content"
 function App() {
   const content = useSelector((state) => state.content);
   //const login = useSelector(state => state.login)
@@ -19,6 +19,11 @@ function App() {
       setlogin(token);
     }
   }, []);
+
+  useEffect(() => {
+    functions.fetchContent()
+  }, []);
+  
 
   const routes = [
     {

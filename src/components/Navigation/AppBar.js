@@ -14,22 +14,21 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { GiBookshelf, GiHamburgerMenu } from "react-icons/gi";
-const pages = [
-  { name: "My Projects", link: "/my_projects" },
-  { name: "All Projects", link: "/" },
-];
-const settings = ["Profile", "Account", "Dashboard", "Logout", "test"];
+
+const settings = ["Log out"];
 
 const ResponsiveAppBar = (props) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [login, setlogin] = useState(props.login);
-
+  const pages = login ? [
+    { name: "My Projects", link: "/my_projects" },
+    { name: "All Projects", link: "/" },
+  ] : [ { name: "All Projects", link: "/" }]
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    console.log(event);
     setAnchorElUser(event.currentTarget);
   };
 
@@ -41,14 +40,16 @@ const ResponsiveAppBar = (props) => {
     setAnchorElUser(null);
   };
 
+  const handleLogOut = () => {
+    window.localStorage.removeItem("LoggedUserData");
+    setlogin(null);
+  };
   useEffect(() => {
-    const token = window.localStorage.getItem("LoggedUserData")
+    const token = window.localStorage.getItem("LoggedUserData");
     if (token) {
-      
-    setlogin(token)
+      setlogin(JSON.parse(token));
     }
-}, [login]);
-  
+  }, []);
 
   return (
     <AppBar
@@ -95,18 +96,20 @@ const ResponsiveAppBar = (props) => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Link
-                    variant="body1"
-                    underline="hover"
-                    color="inherit"
-                    href={page.link}
-                  >
-                    {page.name}
-                  </Link>
-                </MenuItem>
-              ))}
+              {pages.map((page) => {
+                return (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Link
+                      variant="body1"
+                      underline="hover"
+                      color="inherit"
+                      href={page.link}
+                    >
+                      {page.name}
+                    </Link>
+                  </MenuItem>
+                );
+              })}
             </Menu>
           </Box>
           <Typography
@@ -116,22 +119,27 @@ const ResponsiveAppBar = (props) => {
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           ></Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                href={page.link}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page.name}
-              </Button>
-            ))}
+            {pages.map((page) => {
+              return (
+                <Button
+                  key={page}
+                  href={page.link}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.name}
+                </Button>
+              );
+            })}
           </Box>
-          { login !== null ? (
+          {login !== null ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Test" src="/static/images/avatar/2.jpg" />
+                  <Avatar
+                    alt={login.username}
+                    src="/static/images/avatar/2.jpg"
+                  />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -151,7 +159,7 @@ const ResponsiveAppBar = (props) => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={() => window.localStorage.removeItem("LoggedUserData")}>
+                  <MenuItem key={setting} onClick={() => handleLogOut()}>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}

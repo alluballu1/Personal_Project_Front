@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { loginHandler } from "../reducers/loginReducer";
 
 const LoginScreen = () => {
-    const navigation = useNavigate();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const dispatch = useDispatch()
-    
+  const navigation = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+
   let styles = {
     containerStyle: {
       height: "100vh",
@@ -37,10 +37,12 @@ const LoginScreen = () => {
       padding: 10,
     },
   };
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
-    dispatch(loginHandler({username, password}))
-    navigation("/")
+    await dispatch(loginHandler({ username, password }));
+    if (window.localStorage.getItem("LoggedUserData")) {
+      navigation("/");
+    }
   };
   return (
     <Container style={styles.containerStyle}>
@@ -57,18 +59,18 @@ const LoginScreen = () => {
           >
             Login
           </Typography>
-                  <TextField
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+          <TextField
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             margin="normal"
             variant="filled"
             label="Username"
             required
             sx={{ backgroundColor: "ivory", borderRadius: 1 }}
           />
-                  <TextField
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+          <TextField
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             variant="filled"
             label="Username"
             required
