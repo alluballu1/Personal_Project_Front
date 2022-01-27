@@ -6,7 +6,7 @@ const url = process.env.REACT_APP_URL;
 const loginFunction = async (credentials) => {
   try {
     const data = await axios
-      .post(`${url}login`, credentials)
+      .post(`/api/login`, credentials)
     // eslint-disable-next-line react-hooks/rules-of-hooks
     return data.data;
   } catch (err) {

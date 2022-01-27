@@ -8,14 +8,14 @@ const setToken = (newToken) => {
 
 const fetchContent = async () => {
     
-    const data = await axios.get(`${url}projects`)
+    const data = await axios.get(`/api/projects`)
     console.log(url, data.data)
     return data.data
 }
 
 const fetchMyData = async () => {
     
-    const data = await axios.get(`${url}users/me`)
+    const data = await axios.get(`/api/users/me`)
     console.log(url, data.data)
     return data.data
 }
