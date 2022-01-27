@@ -49,7 +49,7 @@ const LoginScreen = () => {
           status: true,
         })
       );
-      navigation("/main");
+      navigation("/");
     } else {
       dispatch(
         enableNotification(5, {

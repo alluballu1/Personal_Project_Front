@@ -34,7 +34,7 @@ function App() {
 
   const routes = [
     {
-      path: "/main",
+      path: "/",
       element: <MainContentScreen content={content} />,
     },
     {

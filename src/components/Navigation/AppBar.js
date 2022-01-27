@@ -25,8 +25,8 @@ const ResponsiveAppBar = (props) => {
   const navigate = useNavigate()
   const pages = login ? [
     { name: "My Projects", link: "/my_projects" },
-    { name: "All Projects", link: "/main" },
-  ] : [ { name: "All Projects", link: "/main" }]
+    { name: "All Projects", link: "/" },
+  ] : [ { name: "All Projects", link: "/" }]
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
