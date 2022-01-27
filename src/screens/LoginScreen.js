@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginHandler } from "../reducers/loginReducer";
+import { enableNotification } from "../reducers/notificationReducer";
 
 const LoginScreen = () => {
   const navigation = useNavigate();
@@ -41,9 +42,49 @@ const LoginScreen = () => {
     event.preventDefault();
     await dispatch(loginHandler({ username, password }));
     if (window.localStorage.getItem("LoggedUserData")) {
-      navigation("/");
+      dispatch(
+        enableNotification(5, {
+          type: "success",
+          text: "Login successful!",
+          status: true,
+        })
+      );
+      navigation("/main");
+    } else {
+      dispatch(
+        enableNotification(5, {
+          type: "error",
+          text: "Invalid credentials!",
+          status: true,
+        })
+      );
     }
   };
+
+/*   const registerHandler = async (event) => {
+    event.preventDefault();
+    await dispatch(loginHandler({ username, password }));
+    if (window.localStorage.getItem("LoggedUserData")) {
+      dispatch(
+        enableNotification(5, {
+          type: "success",
+          text: "Login successful!",
+          status: true,
+        })
+      );
+      navigation("/main");
+    } else {
+      dispatch(
+        enableNotification(5, {
+          type: "error",
+          text: "Invalid credentials!",
+          status: true,
+        })
+      );
+    }
+  }; */
+
+
   return (
     <Container style={styles.containerStyle}>
       <Box style={styles.mainBoxStyle}>
@@ -54,7 +95,7 @@ const LoginScreen = () => {
         >
           <Typography
             variant="h6"
-            color="ivory"
+            color="white"
             style={{ textAlign: "center" }}
           >
             Login
@@ -66,15 +107,16 @@ const LoginScreen = () => {
             variant="filled"
             label="Username"
             required
-            sx={{ backgroundColor: "ivory", borderRadius: 1 }}
+            sx={{ backgroundColor: "white", borderRadius: 1 }}
           />
           <TextField
             value={password}
+            type="password"
             onChange={(e) => setPassword(e.target.value)}
             variant="filled"
-            label="Username"
+            label="Password"
             required
-            sx={{ backgroundColor: "ivory", borderRadius: 1 }}
+            sx={{ backgroundColor: "white", borderRadius: 1 }}
           />
           <div
             style={{

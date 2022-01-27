@@ -32,12 +32,10 @@ const MainNewPostModal = (props) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
+        <Typography sx={{ textAlign:"center"}} id="modal-modal-title" variant="h6" component="h2">
+          Add a new project
         </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
+
         <MainNewPostInputArea
           postContent={(value) => dispatch(addOne(value))}
           close={() => props.close()}

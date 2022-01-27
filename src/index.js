@@ -7,10 +7,10 @@ import App from "./App";
 import stores from "./store";
 
 ReactDOM.render(
-  <Provider store={stores.store}>
-    <BrowserRouter basename="/">
+  <BrowserRouter basename="/">
+    <Provider store={stores.store}>
       <App />
-    </BrowserRouter>
-  </Provider>,
+    </Provider>
+  </BrowserRouter>,
   document.getElementById("root")
 );

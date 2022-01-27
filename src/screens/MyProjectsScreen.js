@@ -50,8 +50,8 @@ const MyProjectsScreen = (props) => {
         close={() => setModalVisibility(!modalVisibility)}
       />
       <div style={styles.componentContainer}>
-        {content.slice(sliceStart, sliceEnd).map((element) => (
-          <div style={{ padding: 10 }}>
+        {content.slice(sliceStart, sliceEnd).map((element, index) => (
+          <div key={index} style={{ padding: 10 }}>
             <MainCardComponent other={content} test={element} />
           </div>
         ))}

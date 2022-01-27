@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { GiBookshelf, GiHamburgerMenu } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
 
 const settings = ["Log out"];
 
@@ -21,10 +22,11 @@ const ResponsiveAppBar = (props) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [login, setlogin] = useState(props.login);
+  const navigate = useNavigate()
   const pages = login ? [
     { name: "My Projects", link: "/my_projects" },
-    { name: "All Projects", link: "/" },
-  ] : [ { name: "All Projects", link: "/" }]
+    { name: "All Projects", link: "/main" },
+  ] : [ { name: "All Projects", link: "/main" }]
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -42,6 +44,8 @@ const ResponsiveAppBar = (props) => {
 
   const handleLogOut = () => {
     window.localStorage.removeItem("LoggedUserData");
+    handleCloseNavMenu()
+    handleCloseUserMenu()
     setlogin(null);
   };
   useEffect(() => {
@@ -49,7 +53,7 @@ const ResponsiveAppBar = (props) => {
     if (token) {
       setlogin(JSON.parse(token));
     }
-  }, []);
+  }, [props]);
 
   return (
     <AppBar
@@ -96,14 +100,14 @@ const ResponsiveAppBar = (props) => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => {
+              {pages.map((page, index) => {
                 return (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <MenuItem key={index} onClick={handleCloseNavMenu}>
                     <Link
                       variant="body1"
                       underline="hover"
                       color="inherit"
-                      href={page.link}
+                      onClick={() => navigate(page.link)}
                     >
                       {page.name}
                     </Link>
@@ -119,12 +123,11 @@ const ResponsiveAppBar = (props) => {
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           ></Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => {
+            {pages.map((page, index) => {
               return (
                 <Button
-                  key={page}
-                  href={page.link}
-                  onClick={handleCloseNavMenu}
+                  key={index}
+                  onClick={() => navigate(page.link)}
                   sx={{ my: 2, color: "white", display: "block" }}
                 >
                   {page.name}
@@ -158,8 +161,8 @@ const ResponsiveAppBar = (props) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={() => handleLogOut()}>
+                {settings.map((setting, index) => (
+                  <MenuItem key={index} onClick={() => handleLogOut()}>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
@@ -177,10 +180,11 @@ const ResponsiveAppBar = (props) => {
                     ":hover": {
                       backgroundColor: "#292929",
                       color: "white",
+                      cursor:"pointer"
                     },
                   }}
-                  underline="none"
-                  href="/login"
+                    underline="none"
+                    onClick={() => navigate("/login")}
                 >
                   Login
                 </Link>

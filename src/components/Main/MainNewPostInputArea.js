@@ -35,10 +35,9 @@ const MainNewPostInputArea = (props) => {
     },
     inputStyle: {
       padding: 0.75,
-      background: "white",
+      background: "ivory",
       borderRadius: 1,
       marginBottom: 1,
-      opacity: 0.5,
     },
   };
   return (
@@ -52,55 +51,54 @@ const MainNewPostInputArea = (props) => {
         component="form"
         onSubmit={submitHandler}
       >
-        <Input
+        <TextField
           value={nameValue}
-          onChange={(value) => setNameValue(value.target.value)}
-          placeholder="Project Name"
-          size="medium"
+          onChange={(e) => setNameValue(e.target.value)}
+          variant="filled"
+          label="Project Name"
+          margin="dense"
           required
-          error={nameValue === ""}
-          sx={styles.inputStyle}
+          sx={{ backgroundColor: "white", borderRadius: 1 }}
         />
-        <Input
+
+        <TextField
           value={urlValue}
-          onChange={(value) => setUrlValue(value.target.value)}
-          placeholder="Project Url"
+          onChange={(e) => setUrlValue(e.target.value)}
+          margin="dense"
+          variant="filled"
+          label="Url"
           required
-          size="medium"
-          error={urlValue === ""}
-          sx={styles.inputStyle}
+          sx={{ backgroundColor: "white", borderRadius: 1 }}
         />
-        <Input
+        <TextField
           value={SSUrlValue}
-          onChange={(value) => setSSurlValue(value.target.value)}
-          placeholder="Project Screenshot Url"
-          size="medium"
-          error={urlValue === ""}
-          sx={styles.inputStyle}
+          onChange={(e) => setSSurlValue(e.target.value)}
+          variant="filled"
+          margin="dense"
+          label="Screenshot URL"
+          sx={{ backgroundColor: "white", borderRadius: 1 }}
         />
-        <Input
+
+        <TextField
           value={descriptionValue}
-          onChange={(value) => setDescriptionValue(value.target.value)}
-          placeholder="Project Description"
-          required
+          onChange={(e) => setDescriptionValue(e.target.value)}
+          variant="filled"
+          margin="dense"
           multiline
           minRows={3}
           maxRows={3}
-          size="medium"
-          error={descriptionValue === ""}
-          sx={{ ...styles.inputStyle }}
+          label="description"
+          sx={{ backgroundColor: "white", borderRadius: 1 }}
         />
         <div
           style={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-evenly",
+            marginTop: 5,
           }}
         >
-          <Button
-            variant="outlined"
-            onClick={() => props.close()}
-          >
+          <Button variant="outlined" onClick={() => props.close()}>
             Cancel
           </Button>
           <Button

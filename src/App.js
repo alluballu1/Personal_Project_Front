@@ -1,15 +1,20 @@
 import "./App.css";
 import ResponsiveAppBar from "./components/Navigation/AppBar";
-import { Container } from "@mui/material";
+import { Alert, Container, Snackbar } from "@mui/material";
 import MainContentScreen from "./screens/MainContentScreen";
 import img from "./media/wallpapertip_blue-pattern-wallpaper_1172740.jpg";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Router } from "react-router-dom";
 import LoginScreen from "./screens/LoginScreen";
 import MyProjectsScreen from "./screens/MyProjectsScreen";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import functions from "./services/content"
+import functions from "./services/content";
+import Notification from "./components/Notification/Notification";
+
+
+
 function App() {
+
   const content = useSelector((state) => state.content);
   //const login = useSelector(state => state.login)
   const [login, setlogin] = useState(null);
@@ -21,13 +26,15 @@ function App() {
   }, []);
 
   useEffect(() => {
-    functions.fetchContent()
+    functions.fetchContent();
   }, []);
-  
+
+
+
 
   const routes = [
     {
-      path: "/",
+      path: "/main",
       element: <MainContentScreen content={content} />,
     },
     {
@@ -48,10 +55,12 @@ function App() {
       >
         <div style={{ marginTop: 60 }}>
           <Container style={{ width: "85%" }}>
+            
+          <Routes>
             {routes.map((element) => {
               return (
-                <Routes>
-                  <Route
+                <Route
+                  key={element}
                     path={element.path}
                     element={
                       <div>
@@ -59,11 +68,12 @@ function App() {
                       </div>
                     }
                   />
-                </Routes>
               );
             })}
+            </Routes>
           </Container>
         </div>
+            <Notification/>
       </div>
     </>
   );

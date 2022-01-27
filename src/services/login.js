@@ -1,10 +1,17 @@
-import axios from "axios"
+import axios from "axios";
+const url = process.env.REACT_APP_URL;
 
-const url = process.env.REACT_APP_URL
+
+
 const loginFunction = async (credentials) => {
-    const data = await axios.post(`${url}login`, credentials)
-    console.log(data.data)
-    return data.data
-}
+  try {
+    const data = await axios
+      .post(`${url}login`, credentials)
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    return data.data;
+  } catch (err) {
+    console.log(/* err.response.statusText, */ err);
+  }
+};
 
-export default {loginFunction}
+export default { loginFunction };
