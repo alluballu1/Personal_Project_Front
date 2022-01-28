@@ -4,11 +4,12 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginHandler } from "../reducers/loginReducer";
 import { enableNotification } from "../reducers/notificationReducer";
-
+import loginFunctinons from "../services/login";
 const LoginScreen = () => {
   const navigation = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [register, setRegister] = useState(false);
   const dispatch = useDispatch();
 
   let styles = {
@@ -42,13 +43,24 @@ const LoginScreen = () => {
     event.preventDefault();
     await dispatch(loginHandler({ username, password }));
     if (window.localStorage.getItem("LoggedUserData")) {
-      dispatch(
-        enableNotification(5, {
-          type: "success",
-          text: "Login successful!",
-          status: true,
-        })
-      );
+      if (register===true) {
+        dispatch(
+          enableNotification(5, {
+            type: "success",
+            text: "Registration successful!",
+            status: true,
+          })
+        );
+      } else {
+        dispatch(
+          enableNotification(5, {
+            type: "success",
+            text: "Login successful!",
+            status: true,
+          })
+        );
+      }
+
       navigation("/");
     } else {
       dispatch(
@@ -60,8 +72,15 @@ const LoginScreen = () => {
       );
     }
   };
+  const registerHandler = async () => {
+    setRegister(true);
+    const test = await loginFunctinons.registerFunction({ username, password });
+    if (test) {
+      document.getElementById("submitButton").click();
+    }
+  };
 
-/*   const registerHandler = async (event) => {
+  /*   const registerHandler = async (event) => {
     event.preventDefault();
     await dispatch(loginHandler({ username, password }));
     if (window.localStorage.getItem("LoggedUserData")) {
@@ -83,7 +102,6 @@ const LoginScreen = () => {
       );
     }
   }; */
-
 
   return (
     <Container style={styles.containerStyle}>
@@ -126,8 +144,8 @@ const LoginScreen = () => {
               justifyContent: "space-around",
             }}
           >
-            <Button>Register</Button>
-            <Button variant="contained" type="submit">
+            <Button onClick={() => registerHandler()}>Register</Button>
+            <Button id="submitButton" variant="contained" type="submit">
               Login
             </Button>
           </div>

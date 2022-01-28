@@ -13,5 +13,13 @@ const loginFunction = async (credentials) => {
     console.log(/* err.response.statusText, */ err);
   }
 };
+const registerFunction = async (credentials)=> {
+  try{
+    const data = await axios.post(`${url}users`, credentials)
+    return data
+  }catch(err){
+    console.error(err)
+  }
+}
 
-export default { loginFunction };
+export default { loginFunction, registerFunction };
