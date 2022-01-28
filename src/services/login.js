@@ -15,7 +15,7 @@ const loginFunction = async (credentials) => {
 };
 const registerFunction = async (credentials)=> {
   try{
-    const data = await axios.post(`${url}users`, credentials)
+    const data = await axios.post(`/api/users`, credentials)
     return data
   }catch(err){
     console.error(err)
