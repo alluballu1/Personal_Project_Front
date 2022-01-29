@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import MainCardComponent from "../components/Main/MainCardComponent";
+import MainEditExistingPostModal from "../components/Main/MainEditExistingPostModal";
 import MainNewPostModal from "../components/Main/MainNewPostModal";
 import MainPagination from "../components/Main/MainPagination";
 
@@ -12,7 +13,7 @@ let styles = {
     minHeight: "100vh",
     height: "fit-content",
     display: "flex",
-    flexDirection:"column"
+    flexDirection: "column",
   },
   componentContainer: {
     flexWrap: "wrap",
@@ -45,13 +46,13 @@ let styles = {
 const MainContentScreen = (props) => {
   const [sliceStart, setSliceStart] = useState(0);
   const [sliceEnd, setSliceEnd] = useState(12);
-  const [modalVisibility, setModalVisibility] = useState(false);
+
   const content = props.content;
 
-
   if (!content) {
-    return <div>Loading</div>
+    return <div>Loading</div>;
   }
+
 
   const pageNavFunct = (event, value) => {
     setSliceEnd(12 * value);
@@ -60,16 +61,16 @@ const MainContentScreen = (props) => {
 
   return (
     <div style={styles.container}>
-      
       <div style={styles.headerStyle}>ALL PROJECTS</div>
-      <MainNewPostModal
-        open={modalVisibility}
-        close={() => setModalVisibility(!modalVisibility)}
-      />
       <div style={styles.componentContainer}>
         {content.slice(sliceStart, sliceEnd).map((element, index) => (
           <div key={index} style={{ padding: 10 }}>
-            <MainCardComponent other={content} test={element} />
+            <MainCardComponent
+              myProject={false}
+              other={content}
+              test={element}
+              
+            />
           </div>
         ))}
       </div>
