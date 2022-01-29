@@ -7,7 +7,7 @@ import MainPagination from "../components/Main/MainPagination";
 import MainSpeedDial from "../components/Main/MainSpeedDial";
 import token from ".././services/content";
 import MainEditExistingPostModal from "../components/Main/MainEditExistingPostModal";
-import {deleteProject} from "../reducers/contentReducer"
+import { deleteProject } from "../reducers/contentReducer";
 import { useDispatch } from "react-redux";
 
 const MyProjectsScreen = (props) => {
@@ -18,7 +18,7 @@ const MyProjectsScreen = (props) => {
   const [editModalVisibility, setEditModalVisibility] = useState(false);
   const [editProjectData, setEditProjectData] = useState(null);
   const content = props.content;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const data = JSON.parse(window.localStorage.getItem("LoggedUserData"));
   if (!content) {
     return <div>Loading</div>;
@@ -69,21 +69,22 @@ const MyProjectsScreen = (props) => {
 
   const buttonStateHandler = (value) => {
     if (value === toggle) {
-      setToggle(null)
-      return
+      setToggle(null);
+      return;
     }
-    setToggle(value)
-  }
-  
+    setToggle(value);
+  };
+
   const editModalFunction = (values) => {
     setEditProjectData(values);
     setEditModalVisibility(true);
   };
 
   const deletionHandler = (values) => {
-    dispatch(deleteProject(values))
-  }
-
+    if (window.confirm("Do you want to delete this project?")) {
+      dispatch(deleteProject(values));
+    }
+  };
 
   return (
     <div style={styles.container}>
@@ -93,7 +94,6 @@ const MyProjectsScreen = (props) => {
         close={() => setModalVisibility(!modalVisibility)}
       />
       <MainEditExistingPostModal
-        
         close={() => setEditModalVisibility(!editModalVisibility)}
         data={editProjectData}
         open={editModalVisibility}
@@ -104,12 +104,22 @@ const MyProjectsScreen = (props) => {
           .slice(sliceStart, sliceEnd)
           .map((element, index) => (
             <div key={index} style={{ padding: 10 }}>
-              <MainCardComponent deletion={(value) => deletionHandler(value)} editFunction={value => editModalFunction(value)} myProject={true} toggle={toggle} other={content} test={element} />
+              <MainCardComponent
+                deletion={(value) => deletionHandler(value)}
+                editFunction={(value) => editModalFunction(value)}
+                myProject={true}
+                toggle={toggle}
+                other={content}
+                test={element}
+              />
             </div>
           ))}
       </div>
       <div style={{ position: "fixed", bottom: 50, right: 0 }}>
-        <MainSpeedDial  buttonPress={(value) => buttonStateHandler(value)} openModal={() => setModalVisibility(true)} />
+        <MainSpeedDial
+          buttonPress={(value) => buttonStateHandler(value)}
+          openModal={() => setModalVisibility(true)}
+        />
       </div>
       <div style={styles.paginationContainer}>
         <div style={{ position: "fixed", bottom: 0 }}>
