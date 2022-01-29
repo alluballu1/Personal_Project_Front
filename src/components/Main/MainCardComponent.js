@@ -6,6 +6,14 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
 export default function MainCardComponent(props) {
+  const urlChecker = (url) => {
+    if (url.includes("http")) {
+      window.open(url)
+    }
+    else {
+      window.open(`https://${url}`)
+    }
+  }
   return (
     <Card
       style={{ backgroundColor: "#2D2D2D" }}
@@ -17,11 +25,12 @@ export default function MainCardComponent(props) {
         maxHeight:260
       }}
     >
-      <CardActionArea onClick={() =>  window.open(props.test.url)}>
+      <CardActionArea onClick={() =>  urlChecker(props.test.projectUrl) }>
         <CardMedia
           component="img"
+          sx={{minWidth:200}}
           height="140"
-          image={props.test.screenshot ? props.test.screenshot : "https://wallpaperbat.com/img/641230-react-js-wallpaper-top-free-react-js-background.jpg"}
+          image={props.test.projectScreenshotUrl ? props.test.projectScreenshotUrl : "https://wallpaperbat.com/img/641230-react-js-wallpaper-top-free-react-js-background.jpg"}
         />
         <CardContent>
           <Typography gutterBottom color="white" variant="h6" component="div">

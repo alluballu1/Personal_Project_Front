@@ -1,49 +1,34 @@
-let defaultState = [
-  {
-    screenshot: "https://kinsta.com/wp-content/uploads/2019/08/jpg-vs-jpeg.jpg",
-        projectName: "My First project",
-    url:"https://www.npmjs.com/package/react-spring",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea earum reiciendis itaque tenetur minus in fugiat! Itaque porro eveniet nobis, iste iure dolores sit, fugit molestiae tenetur optio assumenda fuga.",
-  },
-  {
-    screenshot: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBi1Qa26iwkMZPDbZOVPPwsfu1rryNmkoE5Q&usqp=CAU",
-      projectName: "My Second project",
-    url:"https://www.npmjs.com/package/react-move",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea earum reiciendis itaque tenetur minus in fugiat! Itaque porro eveniet nobis, iste iure dolores sit, fugit molestiae tenetur optio assumenda fuga.",
-  },
-  {
-    screenshot: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNo3-wasDsTIbNSKEPaCnY0MmlvRPzvsUKM1v-cCatlg112L9rN6cpX1_n8I3irQ9L3S4&usqp=CAU",
-      projectName: "My Third project",
-    url:"https://mui.com/components/text-fields/",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea earum reiciendis itaque tenetur minus in fugiat! Itaque porro eveniet nobis, iste iure dolores sit, fugit molestiae tenetur optio assumenda fuga.",
-  },
-  {
-    screenshot: "http://www.or-as.be/sites/default/files/images/general/projectDatabase.jpg",
-      projectName: "My Fourth project",
-    url:"https://reactgo.com/react-open-link-new-tab/",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea earum reiciendis itaque tenetur minus in fugiat! Itaque porro eveniet nobis, iste iure dolores sit, fugit molestiae tenetur optio assumenda fuga.",
-    },
-  
-];
-
+import functions from "../services/content"
+const loggedData = JSON.parse(window.localStorage.getItem("LoggedUserData"))
 export const addOne = (value) => {
   return async (dispatch) => {
     console.log(value);
+    const data = await functions.newPost(value)
+    data.user = {id:loggedData.user.id}
+    console.log(data)
     dispatch({
-      data: value,
+      data: data,
       type: "ADD_NEW",
     });
   };
 };
 
-const projectReducer = (state = defaultState, action) => {
+export const init = () => {
+  return async (dispatch) => {
+    const data = await functions.fetchContent()
+    dispatch({
+      type: "FETCH_ALL",
+      data:data
+    })
+  }
+}
+
+const projectReducer = (state = [], action) => {
   switch (action.type) {
     case "ADD_NEW":
       return [...state, action.data]
+    case "FETCH_ALL":
+      return action.data
     default:
       return state;
   }
