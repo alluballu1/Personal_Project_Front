@@ -47,6 +47,7 @@ const ResponsiveAppBar = (props) => {
     handleCloseNavMenu()
     handleCloseUserMenu()
     setlogin(null);
+    navigate("/")
   };
   useEffect(() => {
     const token = window.localStorage.getItem("LoggedUserData");

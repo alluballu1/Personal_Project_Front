@@ -2,10 +2,10 @@ import { Box, Button, Container, Input, TextField } from "@mui/material";
 import { useState } from "react";
 
 const MainNewPostInputArea = (props) => {
-  const [nameValue, setNameValue] = useState(null);
-  const [urlValue, setUrlValue] = useState(null);
-  const [SSUrlValue, setSSurlValue] = useState(null);
-  const [descriptionValue, setDescriptionValue] = useState(null);
+  const [nameValue, setNameValue] = useState("");
+  const [urlValue, setUrlValue] = useState("");
+  const [SSUrlValue, setSSurlValue] = useState("");
+  const [descriptionValue, setDescriptionValue] = useState("");
 
   const submitHandler = () => {
     if ((!nameValue, !urlValue, !SSUrlValue, !descriptionValue)) {
@@ -14,8 +14,8 @@ const MainNewPostInputArea = (props) => {
     }
     const newProject = {
       projectName: nameValue,
-      url: urlValue,
-      screenshot: SSUrlValue,
+      projectUrl: urlValue,
+      projectScreenshotUrl: SSUrlValue,
       description: descriptionValue,
     };
 
@@ -85,9 +85,10 @@ const MainNewPostInputArea = (props) => {
           variant="filled"
           margin="dense"
           multiline
+          required
           minRows={3}
           maxRows={3}
-          label="description"
+          label="Description"
           sx={{ backgroundColor: "white", borderRadius: 1 }}
         />
         <div

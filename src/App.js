@@ -6,15 +6,14 @@ import img from "./media/wallpapertip_blue-pattern-wallpaper_1172740.jpg";
 import { Routes, Route, Link, Router } from "react-router-dom";
 import LoginScreen from "./screens/LoginScreen";
 import MyProjectsScreen from "./screens/MyProjectsScreen";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import functions from "./services/content";
 import Notification from "./components/Notification/Notification";
-
-
+import { init } from "./reducers/contentReducer";
 
 function App() {
-
+  const dispatch = useDispatch()
   const content = useSelector((state) => state.content);
   //const login = useSelector(state => state.login)
   const [login, setlogin] = useState(null);
@@ -22,11 +21,13 @@ function App() {
     const token = window.localStorage.getItem("LoggedUserData");
     if (token) {
       setlogin(token);
+      functions.setToken(JSON.parse(token))
     }
   }, []);
 
   useEffect(() => {
     functions.fetchContent();
+    dispatch(init())
   }, []);
 
 

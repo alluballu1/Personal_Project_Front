@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import MainCardComponent from "../components/Main/MainCardComponent";
@@ -9,7 +10,9 @@ let styles = {
     padding: 20,
     backgroundColor: "#30302E",
     minHeight: "100vh",
-    height:"fit-content"
+    height: "fit-content",
+    display: "flex",
+    flexDirection:"column"
   },
   componentContainer: {
     flexWrap: "wrap",
@@ -25,6 +28,18 @@ let styles = {
     alignItems: "center",
     justifyContent: "center",
   },
+  headerStyle: {
+    padding: 20,
+    width: "85%",
+    background: "#292929",
+    alignSelf: "center",
+    alignItems: "center",
+    textAlign: "center",
+    color: "white",
+    marginBottom: 10,
+    fontSize: 24,
+    borderRadius: 5,
+  },
 };
 
 const MainContentScreen = (props) => {
@@ -33,6 +48,11 @@ const MainContentScreen = (props) => {
   const [modalVisibility, setModalVisibility] = useState(false);
   const content = props.content;
 
+
+  if (!content) {
+    return <div>Loading</div>
+  }
+
   const pageNavFunct = (event, value) => {
     setSliceEnd(12 * value);
     setSliceStart(12 * value - 12);
@@ -40,6 +60,8 @@ const MainContentScreen = (props) => {
 
   return (
     <div style={styles.container}>
+      
+      <div style={styles.headerStyle}>ALL PROJECTS</div>
       <MainNewPostModal
         open={modalVisibility}
         close={() => setModalVisibility(!modalVisibility)}
