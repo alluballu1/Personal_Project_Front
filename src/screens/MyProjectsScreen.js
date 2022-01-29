@@ -6,12 +6,19 @@ import MainNewPostModal from "../components/Main/MainNewPostModal";
 import MainPagination from "../components/Main/MainPagination";
 import MainSpeedDial from "../components/Main/MainSpeedDial";
 import token from ".././services/content";
+import MainEditExistingPostModal from "../components/Main/MainEditExistingPostModal";
+import {deleteProject} from "../reducers/contentReducer"
+import { useDispatch } from "react-redux";
 
 const MyProjectsScreen = (props) => {
+  const [toggle, setToggle] = useState("");
   const [sliceStart, setSliceStart] = useState(0);
   const [sliceEnd, setSliceEnd] = useState(12);
   const [modalVisibility, setModalVisibility] = useState(false);
+  const [editModalVisibility, setEditModalVisibility] = useState(false);
+  const [editProjectData, setEditProjectData] = useState(null);
   const content = props.content;
+  const dispatch = useDispatch()
   const data = JSON.parse(window.localStorage.getItem("LoggedUserData"));
   if (!content) {
     return <div>Loading</div>;
@@ -60,6 +67,24 @@ const MyProjectsScreen = (props) => {
     },
   };
 
+  const buttonStateHandler = (value) => {
+    if (value === toggle) {
+      setToggle(null)
+      return
+    }
+    setToggle(value)
+  }
+  
+  const editModalFunction = (values) => {
+    setEditProjectData(values);
+    setEditModalVisibility(true);
+  };
+
+  const deletionHandler = (values) => {
+    dispatch(deleteProject(values))
+  }
+
+
   return (
     <div style={styles.container}>
       <div style={styles.headerStyle}>MY PROJECTS</div>
@@ -67,18 +92,24 @@ const MyProjectsScreen = (props) => {
         open={modalVisibility}
         close={() => setModalVisibility(!modalVisibility)}
       />
+      <MainEditExistingPostModal
+        
+        close={() => setEditModalVisibility(!editModalVisibility)}
+        data={editProjectData}
+        open={editModalVisibility}
+      />
       <div style={styles.componentContainer}>
         {content
           .filter((element) => element.user.id === data.user.id)
           .slice(sliceStart, sliceEnd)
           .map((element, index) => (
             <div key={index} style={{ padding: 10 }}>
-              <MainCardComponent other={content} test={element} />
+              <MainCardComponent deletion={(value) => deletionHandler(value)} editFunction={value => editModalFunction(value)} myProject={true} toggle={toggle} other={content} test={element} />
             </div>
           ))}
       </div>
       <div style={{ position: "fixed", bottom: 50, right: 0 }}>
-        <MainSpeedDial openModal={() => setModalVisibility(true)} />
+        <MainSpeedDial  buttonPress={(value) => buttonStateHandler(value)} openModal={() => setModalVisibility(true)} />
       </div>
       <div style={styles.paginationContainer}>
         <div style={{ position: "fixed", bottom: 0 }}>

@@ -8,13 +8,11 @@ const setToken = (newToken) => {
 
 const fetchContent = async () => {
   const data = await axios.get(`${url}projects`);
-  console.log(url, data.data);
   return data.data;
 };
 
 const fetchMyData = async () => {
   const data = await axios.get(`${url}users/me`);
-  console.log(url, data.data);
   return data.data;
 };
 
@@ -26,5 +24,41 @@ const newPost = async (values) => {
   return data.data;
 };
 
+const editPost = async (values) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  console.log(config);
+
+  const data = await axios.put(`${url}projects`, values, config);
+  return data.data;
+};
+
+const deletePost = async (values) => {
+
+  const deletedProject = {
+    projectName: values.projectName,
+    projectUrl: values.projectUrl,
+    projectScreenshotUrl: values.projectScreenshotUrl,
+    description: values.description,
+    id: values.id,
+  };
+
+  //for deleting need to add headers and data separately and in a different order. Remove unwanted variables
+  const data = await axios.delete(`${url}projects`, {
+    headers: { Authorization: token },
+    data: { project: deletedProject },
+  });
+  return data.data;
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { token, setToken:setToken, fetchContent, fetchMyData, newPost };
+export default {
+  token,
+  setToken: setToken,
+  fetchContent,
+  fetchMyData,
+  newPost,
+  editPost,
+  deletePost,
+};

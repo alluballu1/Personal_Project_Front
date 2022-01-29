@@ -3,9 +3,15 @@ import Box from "@mui/material/Box";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
-import { FiPlus } from "react-icons/fi";
+import {  FiPlus } from "react-icons/fi";
 
-const actions = [{ icon: <FiPlus />, name: "New", value: "NEW" }];
+import { AiFillDelete, AiFillEdit} from "react-icons/ai";
+
+const actions = [
+  { icon: <FiPlus />, name: "New", value: "NEW" },
+  { icon: <AiFillEdit />, name: "Edit", value: "EDIT" },
+  { icon: <AiFillDelete />, name: "Delete", value: "DELETE" },
+];
 
 export default function MainSpeedDial(props) {
   const [open, setOpen] = React.useState(false);
@@ -17,7 +23,13 @@ export default function MainSpeedDial(props) {
       case "NEW":
         props.openModal();
         setOpen(false);
-        break
+        break;
+      case "EDIT":
+        props.buttonPress("EDIT");
+        break;
+      case "DELETE":
+        props.buttonPress("DELETE");
+        break;
       default:
         setOpen(false);
         return;
@@ -25,19 +37,19 @@ export default function MainSpeedDial(props) {
   };
 
   return (
-    <Box sx={{ height: 330,  flexGrow: 1 }}>
+    <Box sx={{ height: 330, flexGrow: 1 }}>
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
         sx={{ position: "absolute", bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon  />}
+        icon={<SpeedDialIcon />}
         onClose={handleClose}
         onOpen={handleOpen}
         open={open}
         FabProps={{
           sx: {
             backgroundColor: "#333333",
-            ":hover":{backgroundColor:"#292929"}
-          }
+            ":hover": { backgroundColor: "#292929" },
+          },
         }}
       >
         {actions.map((action) => (
