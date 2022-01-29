@@ -31,7 +31,6 @@ const MainEditExistingPostModal = (props) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Button onClick={() => console.log(props.data)}>TEST</Button>
         <Typography
           sx={{ textAlign: "center" }}
           id="modal-modal-title"
@@ -40,7 +39,6 @@ const MainEditExistingPostModal = (props) => {
         >
           Edit an existing project
         </Typography>
-        <Button>Test</Button>
         <MainEditPostInputArea
           props={props.data}
           postContent={(value) => dispatch(editPostData(value))}
