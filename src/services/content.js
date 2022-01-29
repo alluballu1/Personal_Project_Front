@@ -24,7 +24,7 @@ const newPost = async (values) => {
   const config = {
     headers: { Authorization: token },
   };
-  const data = await axios.post(`${url}projects`, values, config);
+  const data = await axios.post(`/api/projects`, values, config);
   return data.data;
 };
 
