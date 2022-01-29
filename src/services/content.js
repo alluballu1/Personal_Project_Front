@@ -34,7 +34,7 @@ const editPost = async (values) => {
   };
   console.log(config);
 
-  const data = await axios.put(`${url}projects`, values, config);
+  const data = await axios.put(`/api/projects`, values, config);
   return data.data;
 };
 
@@ -49,7 +49,7 @@ const deletePost = async (values) => {
   };
 
   //for deleting need to add headers and data separately and in a different order. Remove unwanted variables
-  const data = await axios.delete(`${url}projects`, {
+  const data = await axios.delete(`/api/projects`, {
     headers: { Authorization: token },
     data: { project: deletedProject },
   });
