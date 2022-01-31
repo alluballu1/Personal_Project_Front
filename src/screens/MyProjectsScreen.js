@@ -35,7 +35,6 @@ const MyProjectsScreen = (props) => {
       backgroundColor: "#30302E",
       minHeight: "100vh",
       height: "fit-content",
-      alignItems: "center",
       display: "flex",
       flexDirection: "column",
     },
